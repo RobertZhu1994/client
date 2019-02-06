@@ -47,7 +47,7 @@ public class Client : MonoBehaviour
                 System.IO.File.Move(fileName[i], newfilePath);
                 fileName[i] = newfilePath;
             }
-            Debug.Log(fileName[i]);
+            //Debug.Log(fileName[i]);
         }
     }
     public void SendFile()

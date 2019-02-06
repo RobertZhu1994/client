@@ -14,12 +14,15 @@ public class Show : MonoBehaviour {
     public int ServerPort = 5500;
     Socket clientSocket;
     IPAddress ip;
-    string FolderName= Application.streamingAssetsPath + "/book/";
+    public string FolderName;
+    public GameObject TextBox;
 
     private void Awake()
     {
         
         ip = IPAddress.Parse("127.0.0.1");
+        FolderName = Application.streamingAssetsPath + "/book/";
+        TextBox = GameObject.Find("Canvas/Text");
     }
     public void Request_C()
     {
@@ -34,7 +37,7 @@ public class Show : MonoBehaviour {
             Debug.Log("failed");
             return;
         }
-        String Msg = "Request_C";
+        String Msg = "Request_C:";
         /////*****************Sending Request the server***********************************////////
         int varSize = Msg.Length;
         byte[] SentSize = BitConverter.GetBytes(varSize);
@@ -64,6 +67,30 @@ public class Show : MonoBehaviour {
         }
         fs.Close();
         clientSocket.Close();
+        Debug.Log("Successfully received from the cloud");
+        TextBox.GetComponent<Text>().text = "";
+        Display(path);
+    }
+    void Display(string path)
+    {
+        Book book;
+        System.Xml.Serialization.XmlSerializer reader;
+
+        /////***********************Read************************///////////
+        reader = new System.Xml.Serialization.XmlSerializer(typeof(Book));
+        System.IO.StreamReader file = new System.IO.StreamReader(path);
+        book = (Book)reader.Deserialize(file);
+        file.Close();
+        
+        
+        TextBox.GetComponent<Text>().fontSize = 36;
+        for (int i = 0; i < book.len; i++)
+        {
+            TextBox.GetComponent<Text>().text += ("Student "+book.StuId[i]+"Posted Comment:"+book.comments[i] + "\n");
+        }
+
+        //if (book.len == 0)
+        //  return;
 
     }
 

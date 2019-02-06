@@ -37,7 +37,7 @@ public class Comment : MonoBehaviour {
             Debug.Log("failed");
             return;
         }
-        
+        //input = GameObject.Find("InputFields").GetComponent<InputField>();
         String Msg = "M:" + StuId.ToString() + "_" + Step.ToString() + "_" + recv;
         Debug.Log("start sending comment: "+Msg);
         
@@ -52,7 +52,7 @@ public class Comment : MonoBehaviour {
         Console.WriteLine("string size=" + stringsize);
         Debug.Log("Sent to server: " + Msg);
         input.text = "";
-
+        
     }
 
 }
