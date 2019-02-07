@@ -8,7 +8,8 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 
-public class Comment : MonoBehaviour {
+public class Reply : MonoBehaviour
+{
     //***********Network Information*****////
     public string ServerIP = "127.0.0.1";
     public int ServerPort = 5500;
@@ -16,20 +17,18 @@ public class Comment : MonoBehaviour {
     IPAddress ip;
 
     private InputField input;
-    public int StuId=0;
-    public int Step=1;
+    public int StuId = 0;
+    public int Step = 0;
     private void Awake()
     {
-        //input = GameObject.Find("Cavans/InputFields").GetComponent<InputField>();
-        //ip = IPAddress.Parse("127.0.0.1");
+
     }
-    public void GetInput(/*string recv/*/)
+    public void GetInput()
     {
-        input = GameObject.Find("InputComment").GetComponent<InputField>();
-        string recv = input.text;
-        //Debug.Log("comment is" + recv);
+        input = GameObject.Find("InputReply").GetComponent<InputField>();
         ip = IPAddress.Parse("127.0.0.1");
-        Debug.Log("input string is" + recv);
+        string recv = input.text;
+        //Debug.Log("input string is" + recv);
         try
         {
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -42,12 +41,12 @@ public class Comment : MonoBehaviour {
             return;
         }
         //input = GameObject.Find("InputFields").GetComponent<InputField>();
-        String Msg = "M:" + StuId.ToString() + "_" + Step.ToString() + "_" + recv;
-        Debug.Log("start sending comment: "+Msg);
-        
+        String Msg = "ReplyM:" + StuId.ToString() + "_" + Step.ToString() + "_" + recv;
+        Debug.Log("start sending comment: " + Msg);
+
         /////*****************Sending file Name String Size***********************************////////
         int varSize = Msg.Length;
-        byte[] SentSize = BitConverter.GetBytes(varSize); 
+        byte[] SentSize = BitConverter.GetBytes(varSize);
         clientSocket.Send(SentSize, 4, SocketFlags.None);
 
         ////******************Sending file Name String String*********************************************/////////
@@ -56,7 +55,7 @@ public class Comment : MonoBehaviour {
         Console.WriteLine("string size=" + stringsize);
         Debug.Log("Sent to server: " + Msg);
         input.text = "";
-        
+
     }
 
 }

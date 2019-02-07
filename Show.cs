@@ -83,10 +83,13 @@ public class Show : MonoBehaviour {
         file.Close();
         
         
-        TextBox.GetComponent<Text>().fontSize = 36;
+        TextBox.GetComponent<Text>().fontSize = 26;
         for (int i = 0; i < book.len; i++)
         {
-            TextBox.GetComponent<Text>().text += ("Student "+book.StuId[i]+"Posted Comment:"+book.comments[i] + "\n");
+            TextBox.GetComponent<Text>().text += ("Student "+book.StuId[i]+" Posted Comment:"+book.comments[i] + "\n");
+            for (int j = 0; j < book.len_reply[i]; j++)
+                TextBox.GetComponent<Text>().text += (book.Reply[i][j] + "\n");
+            TextBox.GetComponent<Text>().text += "\n";
         }
 
         //if (book.len == 0)
